@@ -74,7 +74,7 @@ const App = () => {
           <Loader>
             <BeatLoader color={"#000"} loading={true} size={10} />
           </Loader>
-        ) : // <Placeholder src="src\assets\Movie Icon.png" />
+        ) : 
         notFound ? (
           <Placeholder src="src\assets\Not Found.png" />
         ) : (
