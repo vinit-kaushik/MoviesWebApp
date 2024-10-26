@@ -13,6 +13,7 @@ const App = () => {
   const [movieList, updateMovieList] = useState([]);
   const [selectedMovie, onMovieSelect] = useState();
   const [loader, setLoader] = useState(false);
+  const [notFound, setNotFound] = useState(false);
 
   const fetchData = async (searchString) => {
     setLoader(true);
@@ -23,6 +24,7 @@ const App = () => {
       )}`
     );
     updateMovieList(response.data.Search);
+    if (movieList.length == 0) setNotFound(true);
     setLoader(false);
   };
 
@@ -56,22 +58,25 @@ const App = () => {
         />
       )}
       <MovieListContainer>
-        {
-          loader ? <Loader>
-          <BeatLoader color={"#000"} loading={true} size={10} />
-        </Loader> : movieList?.length ? (
-            movieList.map((movie, index) => (
-              <MovieComponent
-                key={index}
-                movie={movie}
-                onMovieSelect={onMovieSelect}
-              />
-            ))
-        
+        {loader ? (
+          <Loader>
+            <BeatLoader color={"#000"} loading={true} size={10} />
+          </Loader>
+        ) : movieList?.length ? (
+          movieList.map((movie, index) => (
+            <MovieComponent
+              key={index}
+              movie={movie}
+              onMovieSelect={onMovieSelect}
+            />
+          ))
         ) : loader ? (
           <Loader>
             <BeatLoader color={"#000"} loading={true} size={10} />
           </Loader>
+        ) : // <Placeholder src="src\assets\Movie Icon.png" />
+        notFound ? (
+          <Placeholder src="src\assets\Not Found.png" />
         ) : (
           <Placeholder src="src\assets\Movie Icon.png" />
         )}
@@ -97,6 +102,7 @@ const Header = styled.div`
   font-size: 25px;
   font-weight: bold;
   box-shadow: 0 3px 6px 0 #555;
+  border-radius: 10px;
 `;
 
 const AppName = styled.div`
@@ -135,6 +141,8 @@ const SearchInput = styled.input`
   border: none;
   outline: none;
   margin-left: 15px;
+  padding: 5px;
+  width: 100%;
 `;
 
 const MovieListContainer = styled.div`
@@ -157,9 +165,6 @@ const Placeholder = styled.img`
 
 const Loader = styled.div`
   // border: 1px solid red;
-  // margin: 300px;
-  // padding: 10px 400px;
-  // width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
