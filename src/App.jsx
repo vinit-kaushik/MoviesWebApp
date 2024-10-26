@@ -74,10 +74,9 @@ const App = () => {
           ))
         ) : loader ? (
           <Loader>
-            <BeatLoader color={"#000"} loading={true} size={10} />
+            <BeatLoader color={"#000"} loading={loader} size={10} />
           </Loader>
-        ) : 
-        notFound ? (
+        ) : notFound ? (
           // <Placeholder src="src\assets\Not Found.png" />
           <Placeholder src="https://static.thenounproject.com/png/4147389-200.png" />
         ) : (

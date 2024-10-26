@@ -3,12 +3,15 @@ import axios from "axios";
 import { API_KEY } from "../constants/index";
 import styled from "styled-components";
 import { strings } from "../constants/strings";
+import BeatLoader from "react-spinners/BeatLoader";
 
 const MovieInfoComponent = (props) => {
   const [movieInfo, setMovieInfo] = useState();
+  const [loader, setLoader] = useState(false);
   const { selectedMovie } = props;
 
   useEffect(() => {
+    setLoader(true);
     axios
       .get(
         `http://www.omdbapi.com/?i=${selectedMovie}&apikey=${API_KEY.substring(
@@ -16,7 +19,10 @@ const MovieInfoComponent = (props) => {
           8
         )}`
       )
-      .then((response) => setMovieInfo(response.data));
+      .then((response) => {
+        setMovieInfo(response.data);
+        setLoader(false);
+      });
   }, [selectedMovie]);
   return (
     <Container>
@@ -52,10 +58,10 @@ const MovieInfoComponent = (props) => {
               {strings.PLOT} <span>{movieInfo?.Plot}</span>
             </MovieInfo>
           </InfoColumn>
-          <Close onClick={() => props.onMovieSelect()}>X</Close>
+          <Close onClick={() => props.onMovieSelect()}><img width={20} height={20} src="https://cdn.icon-icons.com/icons2/1674/PNG/512/close_111152.png" /></Close>
         </>
       ) : (
-        "Loading..."
+        <BeatLoader color={"#000"} loading={loader} size={10} />
       )}
     </Container>
   );
@@ -115,6 +121,16 @@ const Close = styled.span`
   border-radius: 50%;
   cursor: pointer;
   opacity: 0.8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Loader = styled.div`
+  // border: 1px solid red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 // Fallback Poster: "https://m.media-amazon.com/images/M/MV5BNWE5MGI3MDctMmU5Ni00YzI2LWEzMTQtZGIyZDA5MzQzNDBhXkEyXkFqcGc@._V1_SX300.jpg"
