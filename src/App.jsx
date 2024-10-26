@@ -5,14 +5,17 @@ import MovieComponent from "./components/MovieComponent";
 import MovieInfoComponent from "./components/MovieInfoComponent";
 import { API_KEY } from "./constants";
 import { strings } from "./constants/strings";
+import BeatLoader from "react-spinners/BeatLoader";
 
 const App = () => {
   const [searchQyery, updateSearchQuery] = useState();
   const [timeoutId, updateTimeoutId] = useState();
   const [movieList, updateMovieList] = useState([]);
   const [selectedMovie, onMovieSelect] = useState();
+  const [loader, setLoader] = useState(false);
 
   const fetchData = async (searchString) => {
+    setLoader(true);
     const response = await axios.get(
       `https://www.omdbapi.com/?s=${searchString}&apikey=${API_KEY.substring(
         0,
@@ -20,12 +23,13 @@ const App = () => {
       )}`
     );
     updateMovieList(response.data.Search);
+    setLoader(false);
   };
 
   const onTextChange = (event) => {
     clearTimeout(timeoutId);
     updateSearchQuery(event.target.value);
-    const timeout = setTimeout(() => fetchData(event.target.value), 500);
+    const timeout = setTimeout(() => fetchData(event.target.value), 1500);
     updateTimeoutId(timeout);
   };
 
@@ -52,14 +56,22 @@ const App = () => {
         />
       )}
       <MovieListContainer>
-        {movieList?.length ? (
-          movieList.map((movie, index) => (
-            <MovieComponent
-              key={index}
-              movie={movie}
-              onMovieSelect={onMovieSelect}
-            />
-          ))
+        {
+          loader ? <Loader>
+          <BeatLoader color={"#000"} loading={true} size={10} />
+        </Loader> : movieList?.length ? (
+            movieList.map((movie, index) => (
+              <MovieComponent
+                key={index}
+                movie={movie}
+                onMovieSelect={onMovieSelect}
+              />
+            ))
+        
+        ) : loader ? (
+          <Loader>
+            <BeatLoader color={"#000"} loading={true} size={10} />
+          </Loader>
         ) : (
           <Placeholder src="src\assets\Movie Icon.png" />
         )}
@@ -132,6 +144,8 @@ const MovieListContainer = styled.div`
   padding: 30px;
   gap: 24px;
   justify-content: space-evenly;
+  // border: 1px solid red;
+  height: 100vh;
 `;
 
 const Placeholder = styled.img`
@@ -139,4 +153,14 @@ const Placeholder = styled.img`
   height: 120px;
   margin: 150px;
   // opacity: 50%;
+`;
+
+const Loader = styled.div`
+  // border: 1px solid red;
+  // margin: 300px;
+  // padding: 10px 400px;
+  // width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
