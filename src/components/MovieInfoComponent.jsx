@@ -9,9 +9,11 @@ const MovieInfoComponent = (props) => {
   const [movieInfo, setMovieInfo] = useState();
   const [loader, setLoader] = useState(false);
   const { selectedMovie } = props;
+  console.log(selectedMovie)
 
   useEffect(() => {
     setLoader(true);
+    console.log('under useEffect...before api call')
     axios
       .get(
         `http://www.omdbapi.com/?i=${selectedMovie}&apikey=${API_KEY.substring(
@@ -20,6 +22,7 @@ const MovieInfoComponent = (props) => {
         )}`
       )
       .then((response) => {
+          console.log('under useEffect...after api call')
         setMovieInfo(response.data);
         setLoader(false);
       });
