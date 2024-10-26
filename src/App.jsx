@@ -39,12 +39,10 @@ const App = () => {
     <Container>
       <Header>
         <AppName>
-          {/* <MovieImage src="src\assets\Movie Icon.png" /> */}
           <MovieImage src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKO-lLGWPCfQEv1iVLp3OyTwqsAnsyBSF5eg&s" />
           {strings["APP_TITLE"]}
         </AppName>
         <SearchBox>
-          {/* <SearchIcon src="src\assets\Search Icon.png" /> */}
           <SearchIcon src="https://w7.pngwing.com/pngs/608/913/png-transparent-computer-icons-google-search-symbol-mobile-search-search-for-miscellaneous-logo-mobile-phones-thumbnail.png" />
           <SearchInput
             placeholder={strings["SEARCH_INPUT_PLACEHOLDER"]}
@@ -77,10 +75,8 @@ const App = () => {
             <BeatLoader color={"#000"} loading={loader} size={10} />
           </Loader>
         ) : notFound ? (
-          // <Placeholder src="src\assets\Not Found.png" />
           <Placeholder src="https://static.thenounproject.com/png/4147389-200.png" />
         ) : (
-          // <Placeholder src="src\assets\Movie Icon.png" />
           <Placeholder src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKO-lLGWPCfQEv1iVLp3OyTwqsAnsyBSF5eg&s" />
         )}
       </MovieListContainer>

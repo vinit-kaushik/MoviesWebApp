@@ -126,11 +126,4 @@ const Close = styled.span`
   align-items: center;
 `;
 
-const Loader = styled.div`
-  // border: 1px solid red;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
 // Fallback Poster: "https://m.media-amazon.com/images/M/MV5BNWE5MGI3MDctMmU5Ni00YzI2LWEzMTQtZGIyZDA5MzQzNDBhXkEyXkFqcGc@._V1_SX300.jpg"
